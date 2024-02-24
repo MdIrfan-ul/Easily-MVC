@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;700&display=swap');
+
+
+body{
+    font-family: "Poppins",sans-serif;
+    font-weight: 200;
+  }
+  .custom-navbar {
+    background-color: #052c65;
+  }
