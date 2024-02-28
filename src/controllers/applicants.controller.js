@@ -8,15 +8,19 @@ export default class  ApplicantsController{
     addApplicants(req,res,next){
         const {name,email,contact} = req.body;
         const resume = "uploads/"+req.file.filename;
-        ApplicantsModel.addNewApplicants(name,email,contact,resume);
+        const jobId = req.params.id;
+        ApplicantsModel.addNewApplicants(name,email,contact,resume,jobId);
         let applicants = ApplicantsModel.getApplicants();
         res.redirect('/jobs');
     }
     applicantsView(req,res,next){
         const jobId = req.params.id;
-        ApplicantsModel.getByApplicantsId(jobId);
-        let applicants = ApplicantsModel.getApplicants();
+        let applicants = ApplicantsModel.getApplicantsForJob(jobId);
         if(applicants){
+            applicants = applicants.map((applicant, index) => ({
+                ...applicant,
+                id: index + 1 // Start from 1 for each job
+            }));
             res.render("applicants",{applicants});
         }else{
             res.status(401).render("error");

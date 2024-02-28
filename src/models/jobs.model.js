@@ -10,6 +10,17 @@ export default class JobsModel{
         this.applyBy = applyBy;
         this.openings = openings;
     }
+    static update(id, category, designation, cName, location, salary, skills, applyBy, openings) {
+        let index = jobs.findIndex((job) => job.id == id);
+        if (index !== -1) {
+            // Update the existing job object in the array
+            let updatedJob = new JobsModel(id, category, designation, cName, location, salary, skills, applyBy, openings);
+            jobs[index] = updatedJob;
+        }
+    }
+
+
+
     static getData(){
         return jobs;
     }
@@ -31,6 +42,13 @@ export default class JobsModel{
         jobs.push(newJobs);
 
     }
+    static remove(id){
+        const index = jobs.find((job)=>job.id == id);
+        jobs.splice(index,1);
+    }
+    
+    
+    
 }
 
 

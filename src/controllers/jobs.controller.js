@@ -7,7 +7,7 @@ export default class JobsController{
         let jobs = JobsModel.getData();
         res.render("jobs",{jobs});
     }
-     getJobDetails(req,res,next){
+     async getJobDetails(req,res,next){
         const id = req.params.id;
         let jobs =   JobsModel.getById(id);
         if (!jobs) {
@@ -15,7 +15,7 @@ export default class JobsController{
             return;
         }
         
-        const applicantCount = ApplicantsModel.getApplicantsCountForJob(id); 
+        const applicantCount =  await ApplicantsModel.getApplicantsCountForJob(id); 
         res.render("jobDetails", { jobs:[jobs], applicantCount });
     }
     postJobsView(req,res,next){
@@ -26,5 +26,44 @@ export default class JobsController{
         JobsModel.add(job_category, job_designation, company_name, job_location, salary, skills_required, apply_by,number_of_openings);
         res.redirect("/jobs");
     }
+    getJobUpdateView(req,res,next){
+        const id = req.params.id;
+        let job = JobsModel.getById(id);
+        if(job){
+            res.status(201).render("update-job",{job});
+        }else{
+            res.status(401).render("error");
+        }
+    }
+    postJobsUpdateview(req, res, next) {
+        const jobId = req.params.id;
+        const { category, designation, cName, location, salary, skills, applyBy, openings } = req.body;
+    
+        // Update the job with the provided details
+         JobsModel.update(jobId, category, designation, cName, location, salary, skills, applyBy, openings);
+    
+        // req.session.jobId = jobId;
+        // req.session.applicantCount = 0;
+        var jobs = JobsModel.getData();
+        
+        res.render(`jobs`,{jobs});
+
+    }
+    removeJobsView(req,res,next){
+        const id = req.params.id;
+        const productsFound = JobsModel.getById(id);
+    if (!productsFound) {
+      return res.status(401).render("error");
+    }
+    JobsModel.remove(id);
+    res.redirect("/jobs");
+        
+    }
+    
+    
+    
+    
+    
+    
 
 }

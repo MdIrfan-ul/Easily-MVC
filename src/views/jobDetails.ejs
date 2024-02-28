@@ -1,7 +1,7 @@
 <% jobs.forEach((job) => { %>
   <div class="container my-2">
     <div class="card mb-3">
-      <a href="https://www.codingninjas.com/">
+      <a href="#">
         <img
           src="https://files.codingninjas.com/web-banner-28759.png"
           class="card-img-top"
@@ -35,8 +35,8 @@
               /></svg
           ></span>
           <div class="action-right mx-2 px-2 mt-1">
-            <a href="/job/update/<%= job.id %>" class="mx-2"
-              ><svg
+            <a href="/jobs/<%= job.id %>/update" class="mx-2">
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
@@ -50,9 +50,11 @@
                 <path
                   fill-rule="evenodd"
                   d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                /></svg
-            ></a>
-            <a class="text-danger" href="/job/delete/<%= job.id %>">
+                />
+              </svg>
+            </a>
+            
+            <a class="text-danger" href="/jobs/<%= job.id %>/delete" onclick="deleteJobs('<%=job.id%>')">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -60,6 +62,7 @@
                 fill="currentColor"
                 class="bi bi-file-earmark-x"
                 viewBox="0 0 16 16"
+                
               >
                 <path
                   d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"
@@ -162,10 +165,17 @@
   
           <div class="container">
             <div class="skills p-1">
-              <% job.skills.forEach((skill) => { %>
-              <button class="btn btn-sm btn-outline-info"><%= skill %></button>
-              <% }); %>
+              <% if (job && job.skills) { %>
+                <% if (Array.isArray(job.skills)) { %>
+                  <% job.skills.forEach((skill) => { %>
+                    <button class="btn btn-sm btn-outline-info"><%= skill %></button>
+                  <% }) %>
+                <% } else { %>
+                  <button class="btn btn-sm btn-outline-info"><%= job.skills %></button>
+                <% } %>
+              <% } %>
             </div>
+            
             <button
               data-bs-toggle="modal"
               data-bs-target="#applyModal"
