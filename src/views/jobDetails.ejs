@@ -1,3 +1,4 @@
+
 <% jobs.forEach((job) => { %>
   <div class="container my-2">
     <div class="card mb-3">
@@ -34,8 +35,11 @@
                 d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z"
               /></svg
           ></span>
+          <% if(locals.userEmail){%>
+
           <div class="action-right mx-2 px-2 mt-1">
-            <a href="/jobs/<%= job.id %>/update" class="mx-2">
+            <button class="btn btn-light" onclick="updateJob('<%=job.id%>')">
+            <a href="/jobs/<%= job.id %>/update" class="mx-2" onclick="event.preventDefault()">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -53,8 +57,9 @@
                 />
               </svg>
             </a>
-            
-            <a class="text-danger" href="/jobs/<%= job.id %>/delete" onclick="deleteJobs('<%=job.id%>')">
+          </button>
+            <button class="btn btn-light" onclick="deleteJob('<%=job.id%>')" >
+            <a class="text-danger" href="/jobs/<%= job.id %>/delete" onclick="event.preventDefault()" >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -72,7 +77,9 @@
                 />
               </svg>
             </a>
+          </button>
           </div>
+          <%}%>
         </div>
   
         <div class="container d-flex flex-column align-items-centre justify-content-start my-3">
@@ -191,7 +198,7 @@
             style="width: 160px"
             class="bg-success text-white border border-success border border-success p-1 border-opacity-50 rounded"
           >
-            Posted: <%= job.postedAt %>
+            Posted: <%= locals.lastVisit %>
           </span>
         </small>
         <!-- job posted -->

@@ -2,10 +2,12 @@ import JobsModel from "../models/jobs.model.js";
 import ApplicantsModel from "../models/applicant.model.js";
 
 
+
+
 export default class JobsController{
     getJobs(req,res,next){
         let jobs = JobsModel.getData();
-        res.render("jobs",{jobs});
+        res.render("jobs",{jobs,userName:req.session.userName});
     }
      async getJobDetails(req,res,next){
         const id = req.params.id;
@@ -16,10 +18,10 @@ export default class JobsController{
         }
         
         const applicantCount =  await ApplicantsModel.getApplicantsCountForJob(id); 
-        res.render("jobDetails", { jobs:[jobs], applicantCount });
+        res.render("jobDetails", { jobs:[jobs], applicantCount,userName:req.session.userName,userEmail:req.session.userEmail });
     }
     postJobsView(req,res,next){
-        res.render("postjob");
+        res.render("postjob",{userName:req.session.userName,userEmail:req.session.userEmail});
     }
     postJobs(req,res,next){
         const { job_category, job_designation, job_location, company_name, salary, number_of_openings, skills_required, apply_by } = req.body;
@@ -30,9 +32,9 @@ export default class JobsController{
         const id = req.params.id;
         let job = JobsModel.getById(id);
         if(job){
-            res.status(201).render("update-job",{job});
+            res.status(201).render("update-job",{job,userName:req.session.userName,userEmail:req.session.userEmail});
         }else{
-            res.status(401).render("error");
+            res.status(401).render("not-found");
         }
     }
     postJobsUpdateview(req, res, next) {
@@ -42,28 +44,33 @@ export default class JobsController{
         // Update the job with the provided details
          JobsModel.update(jobId, category, designation, cName, location, salary, skills, applyBy, openings);
     
-        // req.session.jobId = jobId;
-        // req.session.applicantCount = 0;
-        var jobs = JobsModel.getData();
         
-        res.render(`jobs`,{jobs});
+        const updatedJob = JobsModel.getById(jobId);
+        
+        if (updatedJob) {
+            // If job is successfully updated, render the jobDetails view with only the updated job
+            res.render('jobDetails', { jobs: [updatedJob], userName: req.session.userName, applicantCount: 0 ,userEmail:req.session.userEmail});
+        } else {
+            // If job with given id is not found, render an error page or redirect to some other page
+            res.render('error'); 
+        }
 
     }
     removeJobsView(req,res,next){
         const id = req.params.id;
-        const productsFound = JobsModel.getById(id);
-    if (!productsFound) {
+        const jobs = JobsModel.getById(id);
+    if (!jobs) {
       return res.status(401).render("error");
     }
     JobsModel.remove(id);
     res.redirect("/jobs");
         
     }
+    getErrorPage(req,res){
+        res.render("not-found");
+    }
     
-    
-    
-    
-    
-    
-
+     
 }
+
+

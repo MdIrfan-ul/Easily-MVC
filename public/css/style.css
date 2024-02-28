@@ -6,7 +6,6 @@ html {
   margin: 0;
   padding: 0;
 }
-
 .pink
 {
 color: #FF2C90;
@@ -36,13 +35,13 @@ color: #FF2C90;
 }
 .lbtn
 {
-  background-color: #FF2C90 ;
-  color: #FFFFFF ;
+  background-color: #FF2C90;
+  color: #FFFFFF;
 }
 .lbtn:hover
 {
   background-color: #da096a;
-  color: #FFFFFF ;
+  color: #FFFFFF;
 }
 .main-heading
 {
@@ -103,5 +102,3 @@ border-radius: 10px;
   background-color: #0e0d23;
   color: white;
 }
-
-

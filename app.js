@@ -5,9 +5,18 @@ import UserController from "./src/controllers/user.controller.js";
 import JobsController from "./src/controllers/jobs.controller.js";
 import ApplicantsController from "./src/controllers/applicants.controller.js";
 import  validationMiddleware  from "./src/middlewares/validate.middleware.js";
+import UserValidation from "./src/middlewares/user-validation.middleware.js";
 import { uploadFile } from "./src/middlewares/file-upload.middleware.js";
+import { setLastVisit } from "./src/middlewares/last-Visit.middleware.js";
+import { auth } from "./src/middlewares/auth.middleware.js";
+import authorizeJobAccess from "./src/middlewares/recruiter.middleware.js";
 import session from "express-session";
+import cookieParser from "cookie-parser";
+
+
 const app = express();
+
+
 
 app.set("view engine","ejs");
 app.set("views",path.join(path.resolve(),"src","views"));
@@ -15,7 +24,7 @@ app.set("views",path.join(path.resolve(),"src","views"));
 
 app.use(expressEjsLayouts);
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser());
 
 app.use(session({
     secret:'M7xOu3ux1S',
@@ -29,17 +38,26 @@ const userController = new UserController();
 const jobsController = new JobsController();
 const applicantsController = new ApplicantsController();
 
+
+
+
+app.post("/register",UserValidation.userValidationMiddleware,userController.postRegister);
+
 app.get("/login",userController.getLogin);
+app.post("/login",userController.checkUser);
+app.get("/logout",userController.logOutUser);
 app.get("/",userController.getHome);
 app.get("/jobs",jobsController.getJobs);
-app.get("/jobs/:id",jobsController.getJobDetails);
-app.get("/postjob",jobsController.postJobsView);
+app.get("/jobs/:id",setLastVisit,jobsController.getJobDetails);
+app.get("/postjob",auth,setLastVisit,jobsController.postJobsView);
 app.post("/jobs",jobsController.postJobs);
 app.post("/apply/:id",uploadFile.single('resume'),validationMiddleware,applicantsController.addApplicants)
-app.get("/applicants/:id",applicantsController.applicantsView);
-app.get("/jobs/:id/update",jobsController.getJobUpdateView);
-app.post("/jobs/:id/update",jobsController.postJobsUpdateview);
-app.get("/jobs/:id/delete",jobsController.removeJobsView);
+app.get("/applicants/:id",auth,authorizeJobAccess,applicantsController.applicantsView);
+app.get("/jobs/:id/update",auth,authorizeJobAccess,jobsController.getJobUpdateView);
+app.post("/jobs/:id/update",auth,authorizeJobAccess,setLastVisit,jobsController.postJobsUpdateview);
+app.get("/jobs/:id/delete",auth,authorizeJobAccess,jobsController.removeJobsView);
+app.get("/404",jobsController.getErrorPage);
+app.get('/unauthorized',userController.unAuthorized);
 app.use(express.static("src/views"));
 app.use(express.static("public"));
 export default app;

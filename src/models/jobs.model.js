@@ -1,5 +1,5 @@
 export default class JobsModel{
-    constructor(id,category,designation,cName,location,salary,skills,applyBy,openings,){
+    constructor(id,category,designation,cName,location,salary,skills,applyBy,openings,recruiterId){
         this.id = id;
         this.category = category;
         this.designation = designation;
@@ -9,6 +9,7 @@ export default class JobsModel{
         this.skills = skills;
         this.applyBy = applyBy;
         this.openings = openings;
+        this.recruiterId = recruiterId;
     }
     static update(id, category, designation, cName, location, salary, skills, applyBy, openings) {
         let index = jobs.findIndex((job) => job.id == id);
@@ -16,6 +17,7 @@ export default class JobsModel{
             // Update the existing job object in the array
             let updatedJob = new JobsModel(id, category, designation, cName, location, salary, skills, applyBy, openings);
             jobs[index] = updatedJob;
+            return updatedJob; 
         }
     }
 
@@ -27,7 +29,7 @@ export default class JobsModel{
     static getById(id){
         return jobs.find(job=>job.id == id);
     }
-    static add(category,designation,cName,location,salary,skills,applyBy,openings){
+    static add(category,designation,cName,location,salary,skills,applyBy,openings,recruiterId){
         let newJobs = new JobsModel(
             jobs.length+1,
             category,
@@ -37,13 +39,14 @@ export default class JobsModel{
             salary,
             skills,
             applyBy,
-            openings
+            openings,
+            recruiterId
         );
         jobs.push(newJobs);
 
     }
     static remove(id){
-        const index = jobs.find((job)=>job.id == id);
+        const index = jobs.findIndex((job)=>job.id == id);
         jobs.splice(index,1);
     }
     
