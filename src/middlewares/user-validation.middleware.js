@@ -1,6 +1,6 @@
 import {body,validationResult} from "express-validator";
 
-
+// validates the register form
 const userValidationMiddleware = async (req,res,next)=>{
 
     const rules = [
@@ -20,6 +20,8 @@ const userValidationMiddleware = async (req,res,next)=>{
     }
     next();
 }
+
+// validates the login form
 const loginValidationMiddleware = async (req,res,next)=>{
     const rules = [
     body("email").isEmail().withMessage("Invalid Email"),

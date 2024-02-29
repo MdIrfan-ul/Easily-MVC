@@ -1,4 +1,7 @@
+// mail using nodemailer
 import nodemailer from "nodemailer";
+
+// mailing the applicants who applied for job using nodemailer
 async function sendMail(applicantEmail){
     const transporter = nodemailer.createTransport({
         service:"gmail",
@@ -28,7 +31,7 @@ async function sendMail(applicantEmail){
         }
     </style>
         
-        <img src="https://files.codingninjas.in/cnlogo-32511.png"/>
+        <img src="https://static.miraheze.org/greatcharacterswiki/thumb/3/33/Silver_Birb.png/300px-Silver_Birb.png"/>
         <h1>Job Application Confirmation</h1>
         <p>Dear User,</p>
         <p>Thank you for applying for a job at Easily. We have received your application and are currently reviewing it.</p>

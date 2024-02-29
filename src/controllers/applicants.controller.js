@@ -2,10 +2,13 @@ import ApplicantsModel from "../models/applicant.model.js";
 import sendMail from "../middlewares/send-mail.middleware.js";
 
 export default class  ApplicantsController{
+    // renders the applicants page
     getApplicants(req,res,next){
         let applicants = ApplicantsModel.getApplicants();
         res.render('applicants',{applicants,userEmail:req.session.Email});
     }
+
+    // add the applicants to the applicants array and send the applicant a mail using sendmail 
     async addApplicants(req,res,next){
         const {name,email,contact} = req.body;
         const resume = "uploads/"+req.file.filename;
@@ -15,6 +18,8 @@ export default class  ApplicantsController{
         await sendMail(applicantsEmail);
         res.redirect('/jobs');
     }
+
+    // renders the applicants page
     applicantsView(req,res,next){
         const jobId = req.params.id;
         let applicants = ApplicantsModel.getApplicantsForJob(jobId);

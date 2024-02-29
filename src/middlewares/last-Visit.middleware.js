@@ -1,3 +1,4 @@
+// setting a cookie for 2 days for to track user lastvisit
 export const setLastVisit =(req,res,next)=>{
     if(req.cookies.lastVisit){
 res.locals.lastVisit = new Date(req.cookies.lastVisit).toLocaleString()

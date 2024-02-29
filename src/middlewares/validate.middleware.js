@@ -1,5 +1,6 @@
 import {body,validationResult} from "express-validator";
 
+// Validates the applicants form
  const validationMiddleware = async (req,res,next)=>{
     const rules =[
         body("name").notEmpty().withMessage("Name is Required"),
