@@ -13,7 +13,7 @@ This project is a job portal website that allows users to post and manage job li
 - **Email Notification**: When a job application is submitted, an email is sent to the applicant's email address using Nodemailer.
 
 ## Technologies Used
-[![Languages Used](https://skillicons.dev/icons?i=js,html,css,js,nodejs,express)](https://skillicons.dev)
+[![Languages Used](https://skillicons.dev/icons?i=js,html,css,nodejs,express)](https://skillicons.dev)
 
 - **Express.js**: For handling routing and server logic.
 - **Node.js**: For server-side JavaScript runtime.
@@ -28,7 +28,13 @@ This project is a job portal website that allows users to post and manage job li
 To install the required libraries, use npm:
 
 ```bash
-npm install express nodemailer multer express-ejs-layouts express-validator express-session cookie-parser
+npm install express 
+npm install nodemailer
+npm install multer 
+npm install express-ejs-layouts
+npm install express-validator
+npm install express-session
+npm install cookie-parser
 ```
 
 
@@ -40,13 +46,6 @@ npm install express nodemailer multer express-ejs-layouts express-validator expr
 4. Access the application through your web browser.
 5. Explore the job listings, search for jobs, and interact with the application as a recruiter or job seeker.
 
-## Future Improvements
-
-- Implement user authentication and user roles for better security and access control.
-- Enhance the user interface for a more intuitive and engaging experience.
-- Implement more advanced search filters for job seekers.
-- Add support for uploading resumes and documents for job applications.
-- Expand email notifications to include other events such as job posting confirmation and application status updates.
 
 ## License
 
