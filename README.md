@@ -46,10 +46,6 @@ npm install cookie-parser
 4. Access the application through your web browser.
 5. Explore the job listings, search for jobs, and interact with the application as a recruiter or job seeker.
 
-## Hosting
-- This project is hosted on [![Netlify Status](https://api.netlify.com/api/v1/badges/32c20894-17d9-462d-a033-0a141c3cecc6/deploy-status)](https://app.netlify.com/sites/easily-jobs/deploys)
-- The website link is [link](https://easily-jobs.netlify.app/)
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
