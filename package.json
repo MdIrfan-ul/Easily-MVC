@@ -4,10 +4,7 @@
   "description": "This project is built using MVC Model View Controller Architecture with Express.Js To Seperate Data Handling, Interface Rendering and Routing Control",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "build": "echo 'Netlify build step not required'",
-    "precompile-views": "ejs-cli views/ -o public/ --extension html"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -29,8 +26,5 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.11"
   },
-  "type": "module",
-  "devDependencies": {
-    "ejs-cli": "^2.2.3"
-  }
+  "type": "module"
 }
