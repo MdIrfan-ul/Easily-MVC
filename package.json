@@ -4,7 +4,8 @@
   "description": "This project is built using MVC Model View Controller Architecture with Express.Js To Seperate Data Handling, Interface Rendering and Routing Control",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
